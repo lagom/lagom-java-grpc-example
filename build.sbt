@@ -11,9 +11,7 @@ scalaVersion in ThisBuild := "2.12.4"
 val lombok = "org.projectlombok" % "lombok" % "1.16.18"
 
 lazy val `akka-grpc-lagom-quickstart-java` = (project in file("."))
-  .aggregate(`hello-api`, `hello-impl`,
-//    `hello-proxy-api`, `hello-proxy-impl`
-  )
+  .aggregate(`hello-api`, `hello-impl`, `hello-proxy-api`, `hello-proxy-impl`)
 
 lazy val `hello-api` = (project in file("hello-api"))
   .settings(
@@ -57,27 +55,27 @@ lazy val `hello-impl` = (project in file("hello-impl"))
 ).settings(lagomForkedTestSettings: _*)
   .dependsOn(`hello-api`)
 
-//lazy val `hello-proxy-api` = (project in file("hello-proxy-api"))
-//  .settings(
-//    libraryDependencies ++= Seq(
-//      lagomJavadslApi
-//    )
-//  )
-//
-//lazy val `hello-proxy-impl` = (project in file("hello-proxy-impl"))
-//  .enablePlugins(LagomJava)
-//  .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
-//  .settings(
-//  akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java),
-//  //  akkaGrpcExtraGenerators += PlayJavaClientCodeGenerator,
-//).settings(
-//  libraryDependencies ++= Seq(
-//    lagomJavadslTestKit,
-//    lagomLogback,
-//    lombok
-//  )
-//)
-//  .dependsOn(`hello-proxy-api`, `hello-api`)
+lazy val `hello-proxy-api` = (project in file("hello-proxy-api"))
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomJavadslApi
+    )
+  )
+
+lazy val `hello-proxy-impl` = (project in file("hello-proxy-impl"))
+  .enablePlugins(LagomJava)
+  .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
+  .settings(
+  akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java),
+  akkaGrpcExtraGenerators += PlayJavaClientCodeGenerator,
+).settings(
+  libraryDependencies ++= Seq(
+    lagomJavadslTestKit,
+    lagomLogback,
+    lombok
+  )
+)
+  .dependsOn(`hello-proxy-api`, `hello-api`)
 
 lagomCassandraEnabled in ThisBuild := false
 lagomKafkaEnabled in ThisBuild := false

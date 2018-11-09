@@ -55,7 +55,7 @@ public class HelloServiceTest {
         GrpcClientSettings settings =
             GrpcClientSettings
                 .connectToServiceAt("127.0.0.1", sslPort, server.system())
-                .withSSLContext(server.sslContext().get())
+                .withSSLContext(server.clientSslContext().get())
                 .withOverrideAuthority("localhost");
         T grpcClient = null;
         try {

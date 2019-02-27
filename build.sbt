@@ -89,5 +89,5 @@ lagomUnmanagedServices in ThisBuild := Map("helloworld.GreeterService" -> s"http
 
 
 def common = Seq(
-  javacOptions in (Compile,compile) ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-parameters", "-Werror")
+  javacOptions in Compile ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-parameters", "-Werror")
 )

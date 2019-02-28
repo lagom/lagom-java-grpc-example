@@ -12,14 +12,7 @@ scalaVersion in ThisBuild := "2.12.8"
 lagomServiceEnableSsl in ThisBuild := true
 val `hello-impl-HTTPS-port` = 11000
 
-
-// ALL SETTINGS HERE ARE TEMPORARY WORKAROUNDS FOR KNOWN ISSUES OR WIP
-def workaroundSettings: Seq[sbt.Setting[_]] = Seq(
-  // Lagom still can't register a service under the gRPC name so we hard-code t
-  // he port and the use the value to add the entry on the Service Registry
-  lagomServiceHttpsPort := `hello-impl-HTTPS-port`,
-  resolvers += Resolver.bintrayRepo("akka", "maven"), // for snapshot akka-grpc
-)
+resolvers in ThisBuild += Resolver.bintrayRepo("akka", "maven") // for snapshot akka-grpc
 
 lazy val `lagom-java-grpc-example` = (project in file("."))
   .aggregate(`hello-api`, `hello-impl`, `hello-proxy-api`, `hello-proxy-impl`)
@@ -45,9 +38,11 @@ lazy val `hello-impl` = (project in file("hello-impl"))
       AkkaGrpc.Client // the client is only used in tests. See https://github.com/akka/akka-grpc/issues/410
     ),
   akkaGrpcExtraGenerators in Compile += PlayJavaServerCodeGenerator,
-).settings(
-  workaroundSettings: _*
-).settings(
+
+  // WORKAROUND: Lagom still can't register a service under the gRPC name so we hard-code
+  // the port and the use the value to add the entry on the Service Registry
+  lagomServiceHttpsPort := `hello-impl-HTTPS-port`,
+
   libraryDependencies ++= Seq(
     lagomJavadslTestKit,
     lagomLogback

@@ -17,7 +17,8 @@ val `hello-impl-HTTPS-port` = 11000
 def workaroundSettings: Seq[sbt.Setting[_]] = Seq(
   // Lagom still can't register a service under the gRPC name so we hard-code t
   // he port and the use the value to add the entry on the Service Registry
-  lagomServiceHttpsPort := `hello-impl-HTTPS-port`
+  lagomServiceHttpsPort := `hello-impl-HTTPS-port`,
+  resolvers += Resolver.bintrayRepo("akka", "maven"), // for snapshot akka-grpc
 )
 
 lazy val `lagom-java-grpc-example` = (project in file("."))

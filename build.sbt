@@ -12,7 +12,7 @@ scalaVersion in ThisBuild := "2.12.8"
 lagomServiceEnableSsl in ThisBuild := true
 val `hello-impl-HTTPS-port` = 11000
 
-val lagomGrpcTestkit = "com.lightbend.play" %% "lagom-javadsl-grpc-testkit" % "0.5.0+36-729a28ba+20190307-1146"
+val lagomGrpcTestkit = "com.lightbend.play" %% "lagom-javadsl-grpc-testkit" % "0.6.0"
 
 lazy val `lagom-java-grpc-example` = (project in file("."))
   .aggregate(`hello-api`, `hello-impl`, `hello-proxy-api`, `hello-proxy-impl`)

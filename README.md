@@ -1,3 +1,5 @@
+This sample application is now maintained at https://github.com/lagom/lagom-samples.
+
 # Lagom gRPC Example (Java)
 
 This project demonstrates the usage of [akka-grpc](https://github.com/akka/akka-grpc) into Lagom.
